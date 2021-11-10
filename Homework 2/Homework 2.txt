@@ -1,8 +1,8 @@
 Using the blockchain explorer, have a look at the following transactions, what do they do ?
 
 0xb9316bbbae1cd21cd824de8651c72582261230724b1957abdeb466aa96a359c9
-Tokens are sent from a contract to a burn address
- 
+transaction that hacked theDAO token, which led to the split of Ethereum to Ethereum and Ethereum classic
+
 
 0x4fc1580e7f66c58b7c26881cce0aab9c3509afe6e507527f30566fbf8039bcd0
 This is the creation of the uniswap v2 contract that allows the creation of liquidity pools and trading of tokens
