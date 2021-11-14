@@ -26,8 +26,8 @@ constructor() {
 } 
 
 //Make a public function that returns the total supply.
-function totalSupply() public returns (uint _supply) {
-    supply = _supply;
+function totalSupply() public view returns (uint) {
+//    supply = _supply;
     return supply;
 }
 
@@ -37,6 +37,7 @@ function increaseSupply(uint _amount) public onlyOwner {
     supply = supply + _amount;
     emit SupplyChange();
 }
+
 
 
 }
