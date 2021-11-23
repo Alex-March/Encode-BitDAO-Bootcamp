@@ -1,9 +1,7 @@
 // SPDX-License-Identifier:UNLICENSED
 pragma solidity ^0.8.0;
 
-// import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol";
-//import "https://github.com/OpenZeppelin/openzeppelin-contracts/contracts/access/Ownable.sol";
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol";
 
 
@@ -21,7 +19,6 @@ constructor () ERC20("VolcanoCoin", "VLC") {
     _totalSupply = 10000 * (10 **decimals());
     _balances[msg.sender] = _totalSupply;
     _mint(msg.sender, _totalSupply);
-    
 }
 
 struct Payment {
@@ -46,8 +43,10 @@ function newPaymentRecord (address _sender, uint _amount, address _recipient) pr
     PaymentMapping[_sender].push(Payment(_sender, _amount, _recipient));
 }
 
-function transferWithPaymentRecord (uint _amount, address _recipient) public {
+function transfer(address _recipient, uint _amount) public virtual override returns (bool) {
     _transfer(msg.sender, _recipient, _amount);
     newPaymentRecord(msg.sender, _amount, _recipient);
-}    
+    return true;
+}
+
 }
