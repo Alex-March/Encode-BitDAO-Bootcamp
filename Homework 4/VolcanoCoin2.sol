@@ -62,7 +62,7 @@ struct Payment {
 
 
 // 7. We want to reference a payments array to each user sending the payment. Create a mapping which returns an array of Payment structs when given this user’s address.
-mapping(address => Payment[]) public PaymentMapping;
+mapping(address => Payment[]) PaymentMapping;
 
 
 function transfer (uint _quantity, address _recipient) public {
@@ -91,6 +91,9 @@ function increaseSupply(uint _amount) public onlyOwner {
     emit SupplyChange(totalSupply);
 }
 
+function getPayments(address _user) public view returns (Payment[] memory) {
+    return PaymentMapping[_user];
+}
 
 
 }
