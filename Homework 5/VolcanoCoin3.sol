@@ -9,16 +9,18 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contr
 
 contract VolanoCoin is ERC20, Ownable {
 
-uint public _totalSupply;
-
-mapping(address => uint) balances;
+uint private _totalSupply;
 
 event Transferred(address to, uint amount);
 
+mapping(address => uint256) private _balances;
+
+mapping(address => mapping(address => uint256)) private _allowances;
+
 constructor () ERC20("VolcanoCoin", "VLC") {
     _totalSupply = 10000 * (10 **decimals());
-    balances[msg.sender] = _totalSupply;
-    _mint(msg.sender, 10000 * (10 **decimals()));
+    _balances[msg.sender] = _totalSupply;
+    _mint(msg.sender, _totalSupply);
     
 }
 
@@ -28,25 +30,24 @@ struct Payment {
     address recipient_address;
 }
 
-mapping (address => Payment[]) PaymentMapping;
-mapping(address => uint) public balance_list;
+mapping (address => Payment[]) public PaymentMapping;
 
 
-function transfer (address sender, uint _quantity, address _recipient) public {
-    balance_list[msg.sender] -= _quantity;
-    balance_list[_recipient] += _quantity;    
-    PaymentMapping[msg.sender].push(Payment(sender, _quantity, _recipient));
-    emit Transferred(_recipient, _quantity);
+function _mintToOwner(address _account, uint256 _amount) public onlyOwner {
+    _mint(_account, _amount);
+    emit Transfer(address(0), _account, _amount);
 }
 
-function _mintToOwner(address account, uint256 amount) internal virtual {
-    require(account != address(0), "ERC20: mint to the zero address");
-    _totalSupply += amount;
-    balances[account] += amount;
-    emit Transfer(address(0), account, amount);
-    // _afterTokenTransfer(address(0), account, amount);
+function getPayments(address _user) public view returns (Payment[] memory) {
+    return PaymentMapping[_user];
 }
 
+function newPaymentRecord (address _sender, uint _amount, address _recipient) private {
+    PaymentMapping[_sender].push(Payment(_sender, _amount, _recipient));
+}
 
-
+function transferWithPaymentRecord (uint _amount, address _recipient) public {
+    _transfer(msg.sender, _recipient, _amount);
+    newPaymentRecord(msg.sender, _amount, _recipient);
+}    
 }
