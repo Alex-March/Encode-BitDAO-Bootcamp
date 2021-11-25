@@ -12,7 +12,7 @@ contract VolcanoToken is ERC721, Ownable {
     }
 
 
-    uint256 tokenID;
+    uint256 tokenID = 1;
 
     struct metadata {
         uint timestamp;
@@ -20,29 +20,29 @@ contract VolcanoToken is ERC721, Ownable {
         string tokenURI;
     }
 
-    mapping(address => metadata[]) ownershipMapping;
+    mapping(address => metadata[]) public ownershipMapping;
 
-    function mintNFT(address _address, uint tokenID) public {
-
-    }
-    //metadata memory newTokenData = metadata(...)
-
-    function awardItem(address ownershipMapping, string memory tokenURI) public returns (uint256) {
-        _tokenIds.increment();
-
-        uint256 newItemId = _tokenIds.current();
-        _mint(player, newItemId);
-        _setTokenURI(newItemId, tokenURI);
-
-        return newItemId;
+    function mintNFT(address _address) public {
+        require(_address == msg.sender);
+        _mint(_address, tokenID);
+        ownershipMapping[_address].push(metadata(block.timestamp, tokenID, "Volcano"));
+        tokenID += 1;
     }
 
-    function burnToken(address owner, uint tokenID) internal {
-        require (ownerOf(tokenId) == owner, "cannot burn other addresse's tokens!");
-        _clearApproval(tokenId);
-        _ownedTokensCount[owner].decrement();
-        _tokenOwner[tokenId] = address(0);
-        emit Transfer(owner, address(0), tokenId);
+    function burnNFT(uint _tokenID) public {
+        require(super.ownerOf(_tokenID) == msg.sender);
+        _burn(_tokenID);
+        removeBurnedNFT(_tokenID);
     }
+
+    function removeBurnedNFT(uint _tokenID) internal {
+        metadata [] memory ownersTokens = ownershipMapping[msg.sender];
+        delete ownershipMapping[msg.sender];
+    }
+
+    function tokenURI(uint256 _tokenID) public view override(ERC721) returns (string memory) {
+        return super.tokenURI(_tokenID);
+    }
+
 
 }
