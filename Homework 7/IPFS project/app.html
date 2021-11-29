@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>The best IPFS page ever</title>
+        <script src="js/script.js" defer></script>    
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+
+    <body>
+
+        <h1>IPFS Front-end</h1>
+
+        <form action="">
+
+            <div>
+                <label for="IPFSsave">Text to save into IPFS:</label><br><br>
+                <textarea id="IPFSsave" name="IPFSsave" rows="4" cols="50"></textarea> <br>
+                <input type="submit" value="Add text to IPFS"> <br>
+                    
+            </div>
+            
+            <div>
+                <p>Image file you would like to upload:</p>
+                <input name="myFile" type="file"> <br>
+            </div>
+            
+            <input type="submit" value="Add file to IPFS"> <br><br>
+
+            <strong>https://ipfs.io/ipfs/</strong> <br><br>
+
+            <div>
+                <label for="IPFSoutput">Output from the IPFS node:</label><br><br>
+                <textarea id="IPFSoutput" name="IPFSoutput" rows="4" cols="50">Awaiting message from IPFS node...
+                </textarea> <br><br>
+            </div>
+
+            <div>
+                <label for="IPFSrequest">IPFS node request:</label><br><br>
+                <input type="text" id="IPFSrequest" name="IPFSrequest"><br>
+                <input type="submit" value="Get data from IPFS">
+                <input type="submit" value="Get image from IPFS">
+            </div>
+
+        </form>
+        
+
+    </body>
+</html>
