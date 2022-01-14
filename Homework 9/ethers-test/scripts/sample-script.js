@@ -55,7 +55,7 @@ async function deployContract() {
 
   const contract = await volcanoContract.deploy();
   await contract.deployed();
-  console.log("contract addr:", contract.address);
+  console.log("contract:", contract);
   console.log("contract has been deployed, congrats :)")
 }
 
@@ -101,8 +101,8 @@ async function connectToContract() {
 
 // basicProvider()
 // sendingTx()
-// deployContract()
-connectToContract()
+deployContract()
+// connectToContract()
   .then(() => process.exit(0))
   .catch((error) => {
     console.error(error);
